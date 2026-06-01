@@ -13,7 +13,6 @@
 # from config import DATABASE_URL
 
 
-
 # class Base(DeclarativeBase):
 #     """Base class for ORM mapped classes (entities)."""
 
@@ -34,7 +33,6 @@
 
 #     async with engine.begin() as conn:
 #         await conn.run_sync(Base.metadata.create_all)
-        
 
 
 from collections.abc import AsyncGenerator

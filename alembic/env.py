@@ -17,7 +17,6 @@ import asyncio
 # import models.associations  # noqa: F401
 # import models.department  # noqa: F401
 import models.employee  # noqa: F401
-import models.Address
 
 config = context.config
 

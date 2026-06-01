@@ -3,14 +3,14 @@ Employee entity — ORM mapped class for table `employees`.
 """
 
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any
 
-from sqlalchemy import DateTime, Integer, String, func, ForeignKey
+from sqlalchemy import Integer, String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import TYPE_CHECKING
 
-from database import Base
 from models.entity import Entity
+
 if TYPE_CHECKING:
     from models.employee import Employee
 
@@ -32,17 +32,17 @@ class Address(Entity):
     )
     city: Mapped[str] = mapped_column(String(100), nullable=False)
     country: Mapped[str] = mapped_column(String(255), nullable=False, unique=False)
-    zipcode:Mapped[str]= mapped_column(String(255), nullable=True)
-    employee: Mapped["Employee"]= relationship(
+    zipcode: Mapped[str] = mapped_column(String(255), nullable=True)
+    employee: Mapped["Employee"] = relationship(
         "Employee",
-        back_populates="addresses",)
-
+        back_populates="addresses",
+    )
 
     def to_api_dict(self) -> dict[str, Any]:
         """JSON-friendly representation (ISO 8601 for timestamps)."""
         return {
-            "employee_id":self.employee_id,
+            "employee_id": self.employee_id,
             "city": self.city,
             "country": self.country,
-            "zipcode":self.zipcode
+            "zipcode": self.zipcode,
         }

@@ -7,15 +7,20 @@ from models.employee import EmployeeRole
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
-def get_current_user(token:str = Depends(oauth2_scheme)) ->TokenPayload:
+
+def get_current_user(token: str = Depends(oauth2_scheme)) -> TokenPayload:
     payload = decode_access_token(token)
     if payload is None:
         raise UnauthorizedException("invalid or expired token")
     return TokenPayload(**payload)
 
-def require_role(*roles:EmployeeRole):
-    def role_checker(current_user:TokenPayload= Depends(get_current_user),)->TokenPayload:
+
+def require_role(*roles: EmployeeRole):
+    def role_checker(
+        current_user: TokenPayload = Depends(get_current_user),
+    ) -> TokenPayload:
         if current_user.role not in roles:
             raise ForbiddenException("YOU DONT HAVE PERMISSION TO PERFORM THIS ACTION")
         return current_user
+
     return role_checker
