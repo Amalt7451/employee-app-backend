@@ -5,6 +5,7 @@ from models.employee import EmployeeRole
 
 class TokenResponse(BaseModel):
     access_token: str
+    refresh_token: str
     token_type: str = "bearer"
 
 
@@ -19,3 +20,7 @@ class TokenPayload(BaseModel):
     id: int
     email: str
     role: EmployeeRole
+
+
+class RefreshRequest(BaseModel):
+    refresh_token: str
