@@ -8,29 +8,6 @@ class AddressCreate(BaseModel):
     country: str
     city: str
     zipcode: str
-    # @field_validator("zipcode")
-    # @classmethod
-    # def zipcode(cls, v: str) -> str:
-    #     if not v.isdigit():
-    #         raise ValueError("zipcode must contain only digits (0-9)")
-    #     return v
-    # @model_validator(mode="after")
-
-    # def zipcode_length_for_country(self):
-
-    #     country = self.country.strip().upper()
-
-    #     n = len(self.zipcode)
-
-    #     if country in ("US", "USA") and n != 5:
-
-    #         raise ValueError("US ZIP codes must be exactly 5 digits")
-
-    #     elif country == "IN" and n != 6:
-
-    #         raise ValueError("Indian PIN codes must be exactly 6 digits")
-
-    #     return self
 
 
 class EmployeeCreate(BaseModel):

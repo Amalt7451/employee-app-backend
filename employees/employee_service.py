@@ -1,5 +1,3 @@
-"""employee service"""
-
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from exceptions import BadRequestException, NotFoundException

@@ -5,14 +5,16 @@ from database import get_db
 
 from employee_department.emp_dept_service import (
     assign_department_service,
-    get_employee_departments_service,
+    get_departments_of_employee_service,
+    get_employees_of_department_service,
     remove_department_service,
 )
 
-
-from employee_department.emp_dept_schemas import DepartmentResponse
 from models.employee import EmployeeRole
-
+from employee_department.emp_dept_schemas import (
+    DepartmentResponse,
+    EmployeeInDepartmentResponse,
+)
 
 router = APIRouter(
     prefix="/emp-dept",
@@ -34,10 +36,10 @@ async def assign_department(
 
 
 @router.get("/{employee_id}", response_model=list[DepartmentResponse])
-async def get_employee_departments(
+async def get_departments_of_employee(
     employee_id: int, db: AsyncSession = Depends(get_db)
 ):
-    return await get_employee_departments_service(employee_id, db)
+    return await get_departments_of_employee_service(employee_id, db)
 
 
 @router.delete("/{employee_id}/{department_id}")
@@ -46,3 +48,12 @@ async def remove_department(
 ):
     await remove_department_service(employee_id, department_id, db)
     return {"message": "department deleted"}
+
+
+@router.get(
+    "/department/{department_id}", response_model=list[EmployeeInDepartmentResponse]
+)
+async def get_employees_of_department(
+    department_id: int, db: AsyncSession = Depends(get_db)
+):
+    return await get_employees_of_department_service(department_id, db)

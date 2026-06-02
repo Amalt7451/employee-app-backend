@@ -10,7 +10,7 @@ async def assign_department_repo(employee_id: int, department_id: int, db):
     stmt = select(Employee).where(
         Employee.id == employee_id, Employee.deleted_at.is_(None)
     )
-    employee = db.scalar(stmt)
+    employee = await db.scalar(stmt)
     if employee is None:
         raise NotFoundException("employee not found")
     department = await db.scalar(
@@ -28,7 +28,7 @@ async def assign_department_repo(employee_id: int, department_id: int, db):
     await db.commit()
 
 
-async def get_employee_departments_repo(employee_id: int, db):
+async def get_departments_of_employee_repo(employee_id: int, db):
     employee = await db.scalar(
         select(Employee).where(
             Employee.id == employee_id, Employee.deleted_at.is_(None)
@@ -64,3 +64,24 @@ async def remove_department_repo(employee_id: int, department_id: int, db):
         )
     )
     await db.commit()
+
+
+async def get_employees_of_department_repo(department_id: int, db):
+    department = await db.scalar(
+        select(Department).where(
+            Department.id == department_id, Department.deleted_at.is_(None)
+        )
+    )
+
+    if department is None:
+        raise NotFoundException("department not found")
+    stmt = (
+        select(Employee)
+        .join(employee_department, Employee.id == employee_department.c.employee_id)
+        .where(
+            employee_department.c.department_id == department_id,
+            Employee.deleted_at.is_(None),
+        )
+    )
+    result = await db.scalars(stmt)
+    return result.all()

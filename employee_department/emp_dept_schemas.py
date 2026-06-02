@@ -11,3 +11,11 @@ class DepartmentResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
     name: str
+
+
+class EmployeeInDepartmentResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    name: str
+    email: str
+    age: int | None
