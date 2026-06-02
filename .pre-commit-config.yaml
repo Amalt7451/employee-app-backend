@@ -11,7 +11,7 @@ repos:
     hooks:
       # - id: no-commit-to-branch      # protects main & master
       - id: check-added-large-files  # prevents accidental large file commits
-      # - id: end-of-file-fixer        # ensures files end with newline
+      - id: end-of-file-fixer        # ensures files end with newline
       - id: trailing-whitespace      # removes trailing whitespace
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.15
