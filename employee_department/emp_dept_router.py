@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
+from auth.dependencies import require_role
 from database import get_db
 
 from employee_department.emp_dept_service import (
@@ -10,9 +11,14 @@ from employee_department.emp_dept_service import (
 
 
 from employee_department.emp_dept_schemas import DepartmentResponse
+from models.employee import EmployeeRole
 
 
-router = APIRouter(prefix="/emp-dept", tags=["Employee Department"])
+router = APIRouter(
+    prefix="/emp-dept",
+    tags=["Employee Department"],
+    dependencies=[Depends(require_role(EmployeeRole.HR))],
+)
 
 
 @router.post(

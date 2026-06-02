@@ -9,8 +9,8 @@ from employees.schemas import (
     EmployeeResponseUpdate,
     EmployeeUpdate,
 )
-from auth.dependencies import get_current_user, require_role
-from auth.schemas import TokenPayload
+from auth.dependencies import require_role
+
 from employees.employee_service import (
     get_employee_by_id_service,
     update_employee_service,
@@ -55,7 +55,6 @@ async def delete_employee(id: int, db: AsyncSession = Depends(get_db)):
 )
 async def get_all_employees(
     db: AsyncSession = Depends(get_db),
-    _current_user: TokenPayload = Depends(get_current_user),
 ):
     allEmployee = await employee_service.get_all_employee(db)
     return allEmployee
